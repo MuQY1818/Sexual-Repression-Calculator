@@ -4,6 +4,8 @@ import { resolve } from "path";
 import { app } from "./src/server/app.dev";
 import { getRequestListener } from "@hono/node-server";
 
+const assetPrefix = process.env.GITHUB_PAGES ? "/Sexual-Repression-Calculator/" : "/";
+
 export default defineConfig({
   plugins: [pluginReact()],
   html: {
@@ -19,6 +21,7 @@ export default defineConfig({
       root: "dist/web",
     },
     legalComments: "none",
+    assetPrefix,
   },
   dev: {
     watchFiles: {
