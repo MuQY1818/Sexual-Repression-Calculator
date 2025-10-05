@@ -23,24 +23,32 @@ const ScrollToTop: React.FC = () => {
   return null;
 };
 
-const App: React.FC = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster richColors />
-      <BrowserRouter>
-        <ScrollToTop />
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/assessment" element={<Assessment />} />
-          <Route path="/results" element={<Results />} />
-          <Route path="/guide" element={<Guide />} />
-          <Route path="/science" element={<Science />} />
-          <Route path="/history" element={<History />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+const App: React.FC = () => {
+  const basename = ((): string => {
+    const path = new URL(document.baseURI).pathname;
+    const normalized = path.endsWith("/") ? path.slice(0, -1) : path;
+    return normalized || "/";
+  })();
+
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster richColors />
+        <BrowserRouter basename={basename}>
+          <ScrollToTop />
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/assessment" element={<Assessment />} />
+            <Route path="/results" element={<Results />} />
+            <Route path="/guide" element={<Guide />} />
+            <Route path="/science" element={<Science />} />
+            <Route path="/history" element={<History />} />
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
 export default App;
